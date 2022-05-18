@@ -1,0 +1,44 @@
+﻿@using ShopSite_Blazor.Client
+@using ShopSite_Blazor.Client.Services
+@using ShopSite_Blazor.Shared
+@inject IProductService ProductService
+@if (ProductService.Products == null || ProductService.Products.Count == 0 )
+{
+    <span>Loading Gammed...</span>
+}
+else
+{
+    <ul class="list-unstyled">
+
+    @foreach (var product in ProductService.Products)
+    {
+        <li class="media">
+            <div class="media-img-wrapper">
+                <a href="#"><img class="media-img" src="@product.ImageUrl"  alt="@product.Title"></a>
+            </div>
+            <div class="media-body">
+                <a href="#">
+                    <h4 class="mb-0">@product.Title</h4>
+                </a> 
+             <p>@product.Description</p>
+            <h5 class="price">$@product.Price</h5>
+            </div>
+           
+        </li>
+    }
+</ul>  
+}
+@code {
+
+
+    //private static List<Product> Products = new List<Product>();
+
+    protected override async Task OnInitializedAsync()
+    {
+
+       await ProductService.GetProducts();
+    }
+
+
+
+}
