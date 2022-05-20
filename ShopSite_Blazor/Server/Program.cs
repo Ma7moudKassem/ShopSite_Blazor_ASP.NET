@@ -1,9 +1,13 @@
 using Microsoft.AspNetCore.ResponseCompression;
 using Microsoft.EntityFrameworkCore;
+using ShopSite_Blazor.Server;
 using ShopSite_Blazor.Server.Data;
 using ShopSite_Blazor.Server.Services;
+using ShopSite_Blazor.Server.Services.CategoryService;
+using ShopSite_Blazor.Server.Services.ProductService.ProductService;
 
 var builder = WebApplication.CreateBuilder(args);
+
 
 // Add services to the container.
 
@@ -20,6 +24,7 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddControllersWithViews();
 builder.Services.AddRazorPages();
 builder.Services.AddScoped<IProductService,ProductService> ();
+builder.Services.AddScoped<ICategoryService, CategoryService>();
 
 var app = builder.Build();
 app.UseSwaggerUI();

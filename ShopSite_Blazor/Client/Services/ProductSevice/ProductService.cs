@@ -1,7 +1,7 @@
 ﻿using ShopSite_Blazor.Shared;
 using System.Net.Http.Json;
 
-namespace ShopSite_Blazor.Client.Services
+namespace ShopSite_Blazor.Client.Services.ProductSevice
 {
     public class ProductService : IProductService
     {
@@ -12,6 +12,14 @@ namespace ShopSite_Blazor.Client.Services
         }
 
         public List<Product> Products { get; set; } = new List<Product>();
+
+        public async Task<ServiceResponce<Product>> GetProduct(int productId)
+        {
+            var result = await _http.GetFromJsonAsync<ServiceResponce<Product>>($"api/Product/{productId}");
+            return result;
+        }
+
+
         public async Task GetProducts()
         {
             var result = await _http.GetFromJsonAsync<ServiceResponce<List<Product>>>("api/Product");
