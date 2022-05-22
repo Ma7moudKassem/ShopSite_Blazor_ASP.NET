@@ -1,5 +1,19 @@
 ﻿@page "/"
+@page "/{categoryUrl}"
+@using ShopSite_Blazor.Client.Services.ProductSevice
+@inject IProductService ProductService
 
 <PageTitle>Shopping Site</PageTitle>
 
 <ProductList />
+
+
+@code{
+    [Parameter]
+    public string? categoryUrl { get; set; } = null;
+
+    protected override async Task OnParametersSetAsync()
+    {
+        await ProductService.GetProducts(categoryUrl);
+    }
+}

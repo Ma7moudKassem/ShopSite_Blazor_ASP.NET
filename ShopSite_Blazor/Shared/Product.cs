@@ -12,8 +12,9 @@ namespace ShopSite_Blazor.Shared
         public string Title { get; set; } = String.Empty;
         public string ImageUrl { get; set; } = String.Empty;
         public string Description { get; set; } = String.Empty;
-        public decimal Price { get; set; }
         public Category? Category { get; set; }
         public int CategoryId { get; set; }
+
+        List<ProductVariant> Variants = new List<ProductVariant>();
     }
 }

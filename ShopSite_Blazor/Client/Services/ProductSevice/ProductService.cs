@@ -13,6 +13,8 @@ namespace ShopSite_Blazor.Client.Services.ProductSevice
 
         public List<Product> Products { get; set; } = new List<Product>();
 
+        public event Action ProductChange;
+
         public async Task<ServiceResponce<Product>> GetProduct(int productId)
         {
             var result = await _http.GetFromJsonAsync<ServiceResponce<Product>>($"api/Product/{productId}");
@@ -20,15 +22,21 @@ namespace ShopSite_Blazor.Client.Services.ProductSevice
         }
 
 
-        public async Task GetProducts()
+        public async Task GetProducts(string? categoryUrl = null)
         {
-            var result = await _http.GetFromJsonAsync<ServiceResponce<List<Product>>>("api/Product");
+            var result = categoryUrl == null ? 
+                await _http.GetFromJsonAsync<ServiceResponce<List<Product>>>("api/Product") : 
+                await _http.GetFromJsonAsync<ServiceResponce<List<Product>>>($"api/Product/category/{categoryUrl}");
             {
                 if (result != null && result.Data != null)
                     Products = result.Data;
 
 
             }
+
+            ProductChange.Invoke();
         }
+
+     
     }
 }

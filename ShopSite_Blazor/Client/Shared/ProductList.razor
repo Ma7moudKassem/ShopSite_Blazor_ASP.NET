@@ -3,6 +3,7 @@
 @using ShopSite_Blazor.Client.Services.ProductSevice
 @using ShopSite_Blazor.Shared
 @inject IProductService ProductService
+@implements IDisposable
 @if (ProductService.Products == null || ProductService.Products.Count == 0 )
 {
     <span>Loading Gammed...</span>
@@ -22,7 +23,9 @@ else
                     <h4 class="mb-0">@product.Title</h4>
                 </a> 
              <p>@product.Description</p>
-            <h5 class="price">$@product.Price</h5>
+            <h5 class="price">
+                <!--@product.Price-->
+                </h5>
             </div>
            
         </li>
@@ -33,12 +36,16 @@ else
 
 
 
-    protected override async Task OnInitializedAsync()
+    protected override void OnInitialized()
     {
 
-       await ProductService.GetProducts();
+        ProductService.ProductChange += StateHasChanged;
     }
 
+    public void Dispose()
+    {
+      ProductService.ProductChange -= StateHasChanged;  
+    }
 
 
 }

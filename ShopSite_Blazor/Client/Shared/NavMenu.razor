@@ -40,8 +40,8 @@
         collapseNavMenu = !collapseNavMenu;
     }
 
-    protected override async Task OnInitializedAsync()
+    protected override  async Task OnInitializedAsync()
     {
-         await CategoryService.GetCategories();
+        await CategoryService.GetCategories();
     }
 }
